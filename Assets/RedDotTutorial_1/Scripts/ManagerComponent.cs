@@ -1,5 +1,8 @@
 ﻿namespace RedDotTutorial_1
 {
+    /// <summary>
+    /// 游戏管理器
+    /// </summary>
     public static class ManagerComponent
     {
         #region 红点管理器

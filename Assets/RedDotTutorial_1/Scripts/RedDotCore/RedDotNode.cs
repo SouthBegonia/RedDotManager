@@ -31,7 +31,7 @@ namespace RedDotTutorial_1
         /// <summary>
         /// 子红点的字典表
         /// </summary>
-        public Dictionary<string, RedDotNode> RdChildrenDic = new Dictionary<string, RedDotNode>();
+        public Dictionary<string, RedDotNode> rdChildrenDic = new Dictionary<string, RedDotNode>();
 
 
         #region 内部接口
@@ -43,14 +43,14 @@ namespace RedDotTutorial_1
         {
             //该红点的计数 = 子红点的计数之和
             int num = 0;
-            foreach (RedDotNode node in RdChildrenDic.Values)
+            foreach (RedDotNode node in rdChildrenDic.Values)
                 num += node.rdCount;
 
             //红点计数有变化
             if (num != rdCount)
             {
                 rdCount = num;
-                NotifyPointDotChange();
+                NotifyRedDotCountChange();
             }
 
             parent?.CheckRedDotCount();
@@ -59,7 +59,7 @@ namespace RedDotTutorial_1
         /// <summary>
         /// 红点计数变化，通知
         /// </summary>
-        private void NotifyPointDotChange()
+        private void NotifyRedDotCountChange()
         {
             countChangeFunc?.Invoke(this);
         }
@@ -71,20 +71,20 @@ namespace RedDotTutorial_1
         /// <summary>
         /// 设置红点的数量
         /// </summary>
-        /// <param name="rpCount"></param>
-        public void SetRedDotCount(int rpCount)
+        /// <param name="rdCount"></param>
+        public void SetRedDotCount(int rdCount)
         {
             //只能对非根节点进行设定
-            if (RdChildrenDic.Count > 0)
+            if (rdChildrenDic.Count > 0)
             {
                 Debug.LogWarning("不可直接设定根节点的红点数");
                 return;
             }
 
             //设定该红点的计数
-            rdCount = rpCount;
+            rdCount = rdCount;
 
-            NotifyPointDotChange();
+            NotifyRedDotCountChange();
 
             parent?.CheckRedDotCount();
         }

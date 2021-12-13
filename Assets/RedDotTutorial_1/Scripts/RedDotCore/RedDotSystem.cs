@@ -5,6 +5,24 @@ using UnityEngine;
 namespace RedDotTutorial_1
 {
     /// <summary>
+    /// 红点路径定义
+    /// </summary>
+    public static class E_RedDotDefine
+    {
+        /// <summary>
+        /// 红点树的根节点
+        /// </summary>
+        public const string rdRoot = "Root";
+
+
+        // ---------- 业务红点 ----------
+
+        public const string MailBox = "Root/Mail";
+        public const string MailBox_System = "Root/Mail/System";
+        public const string MailBox_Team = "Root/Mail/Team";
+    }
+
+    /// <summary>
     /// 红点系统
     /// </summary>
     public class RedDotSystem
@@ -15,28 +33,27 @@ namespace RedDotTutorial_1
             Debug.Log("--------------- 初始化 RedDotSystem 完毕 ---------------");
         }
 
-
         /// <summary>
-        /// 红点变化通知委托
+        /// 红点数变化通知委托
         /// </summary>
         /// <param name="node"></param>
         public delegate void OnRdCountChange(RedDotNode node);
 
         /// <summary>
-        /// 红点树的的 Root节点（即Main节点）
+        /// 红点树的的 Root节点
         /// </summary>
         private RedDotNode mRootNode;
 
         /// <summary>
-        /// 初始化红点树
+        /// 红点路径的表（每次 E_RedDotDefine 添加完后此处也必须添加）
         /// </summary>
         private static List<string> lstRedDotTreeList = new List<string>
         {
-            RedDotDefine.rdRoot,
+            E_RedDotDefine.rdRoot,
 
-            RedDotDefine.MailBox,
-            RedDotDefine.MailBox_System,
-            RedDotDefine.MailBox_Team,
+            E_RedDotDefine.MailBox,
+            E_RedDotDefine.MailBox_System,
+            E_RedDotDefine.MailBox_Team,
         };
 
 
@@ -47,7 +64,11 @@ namespace RedDotTutorial_1
         /// </summary>
         private void InitRedDotTreeNode()
         {
-            mRootNode = new RedDotNode {rdName = RedDotDefine.rdRoot};
+            /*
+            * 结构层：根据红点是否显示或显示数，自定义红点的表现方式
+            */
+
+            mRootNode = new RedDotNode {rdName = E_RedDotDefine.rdRoot};
 
             foreach (string path in lstRedDotTreeList)
             {
@@ -57,7 +78,7 @@ namespace RedDotTutorial_1
 
                 if (treeNodeAy[0] != mRootNode.rdName)
                 {
-                    Debug.LogError("根节点必须为Main，检查 " + treeNodeAy[0]);
+                    Debug.LogError("根节点必须为Root，检查 " + treeNodeAy[0]);
                     continue;
                 }
 
@@ -65,15 +86,15 @@ namespace RedDotTutorial_1
                 {
                     for (int i = 1; i < nodeCount; i++)
                     {
-                        if (!curNode.RdChildrenDic.ContainsKey(treeNodeAy[i]))
+                        if (!curNode.rdChildrenDic.ContainsKey(treeNodeAy[i]))
                         {
-                            curNode.RdChildrenDic.Add(treeNodeAy[i], new RedDotNode());
+                            curNode.rdChildrenDic.Add(treeNodeAy[i], new RedDotNode());
                         }
 
-                        curNode.RdChildrenDic[treeNodeAy[i]].rdName = treeNodeAy[i];
-                        curNode.RdChildrenDic[treeNodeAy[i]].parent = curNode;
+                        curNode.rdChildrenDic[treeNodeAy[i]].rdName = treeNodeAy[i];
+                        curNode.rdChildrenDic[treeNodeAy[i]].parent = curNode;
 
-                        curNode = curNode.RdChildrenDic[treeNodeAy[i]];
+                        curNode = curNode.rdChildrenDic[treeNodeAy[i]];
                     }
                 }
             }
@@ -94,7 +115,7 @@ namespace RedDotTutorial_1
 
             if (nodeList.Length == 1)
             {
-                if (nodeList[0] != RedDotDefine.rdRoot)
+                if (nodeList[0] != E_RedDotDefine.rdRoot)
                 {
                     Debug.LogError("Get Wrong Root Node! current is " + nodeList[0]);
                     return;
@@ -104,13 +125,13 @@ namespace RedDotTutorial_1
             var node = mRootNode;
             for (int i = 1; i < nodeList.Length; i++)
             {
-                if (!node.RdChildrenDic.ContainsKey(nodeList[i]))
+                if (!node.rdChildrenDic.ContainsKey(nodeList[i]))
                 {
                     Debug.LogError("Does Not Contain child Node: " + nodeList[i]);
                     return;
                 }
 
-                node = node.RdChildrenDic[nodeList[i]];
+                node = node.rdChildrenDic[nodeList[i]];
 
                 if (i == nodeList.Length - 1)
                 {
@@ -131,7 +152,7 @@ namespace RedDotTutorial_1
 
             if (nodeList.Length == 1)
             {
-                if (nodeList[0] != RedDotDefine.rdRoot)
+                if (nodeList[0] != E_RedDotDefine.rdRoot)
                 {
                     Debug.Log("Get Wrong RootNod！ current is " + nodeList[0]);
                     return;
@@ -143,9 +164,9 @@ namespace RedDotTutorial_1
             for (int i = 1; i < nodeList.Length; i++)
             {
                 //父红点的 子红点字典表 内，必须包含
-                if (node.RdChildrenDic.ContainsKey(nodeList[i]))
+                if (node.rdChildrenDic.ContainsKey(nodeList[i]))
                 {
-                    node = node.RdChildrenDic[nodeList[i]];
+                    node = node.rdChildrenDic[nodeList[i]];
 
                     //设置叶子红点的红点数
                     if (i == nodeList.Length - 1)
@@ -178,9 +199,9 @@ namespace RedDotTutorial_1
                 for (int i = 1; i < nodeList.Length; i++)
                 {
                     //父红点的 子红点字典表 内，必须包含
-                    if (node.RdChildrenDic.ContainsKey(nodeList[i]))
+                    if (node.rdChildrenDic.ContainsKey(nodeList[i]))
                     {
-                        node = node.RdChildrenDic[nodeList[i]];
+                        node = node.rdChildrenDic[nodeList[i]];
 
                         if (i == nodeList.Length - 1)
                         {

@@ -21,24 +21,28 @@ namespace RedDotTutorial_1
         /// </summary>
         public RedDotItem MailTeamDot;
 
+        /*
+* 驱动层：注册监听红点、红点触发，并通知表现层
+*/
+
         void Start()
         {
             //注册红点，通常放在 UI.OnInit 或 UI.OnOpen 中
-            ManagerComponent.RedDotManager.SetRedDotNodeCallBack(RedDotDefine.MailBox, MailCallBack);
-            ManagerComponent.RedDotManager.SetRedDotNodeCallBack(RedDotDefine.MailBox_System, MailSystemCallBack);
-            ManagerComponent.RedDotManager.SetRedDotNodeCallBack(RedDotDefine.MailBox_Team, MailTeamCallBack);
+            ManagerComponent.RedDotManager.SetRedDotNodeCallBack(E_RedDotDefine.MailBox, MailCallBack);
+            ManagerComponent.RedDotManager.SetRedDotNodeCallBack(E_RedDotDefine.MailBox_System, MailSystemCallBack);
+            ManagerComponent.RedDotManager.SetRedDotNodeCallBack(E_RedDotDefine.MailBox_Team, MailTeamCallBack);
 
             //初始显示红点信息
-            ManagerComponent.RedDotManager.Set(RedDotDefine.MailBox_System, 3);
-            ManagerComponent.RedDotManager.Set(RedDotDefine.MailBox_Team, 2);
+            ManagerComponent.RedDotManager.Set(E_RedDotDefine.MailBox_System, 3);
+            ManagerComponent.RedDotManager.Set(E_RedDotDefine.MailBox_Team, 2);
         }
 
         private void OnDestroy()
         {
             //注销红点，通常放在 UI.OnClose 中
-            ManagerComponent.RedDotManager.SetRedDotNodeCallBack(RedDotDefine.MailBox, null);
-            ManagerComponent.RedDotManager.SetRedDotNodeCallBack(RedDotDefine.MailBox_System, null);
-            ManagerComponent.RedDotManager.SetRedDotNodeCallBack(RedDotDefine.MailBox_Team, null);
+            ManagerComponent.RedDotManager.SetRedDotNodeCallBack(E_RedDotDefine.MailBox, null);
+            ManagerComponent.RedDotManager.SetRedDotNodeCallBack(E_RedDotDefine.MailBox_System, null);
+            ManagerComponent.RedDotManager.SetRedDotNodeCallBack(E_RedDotDefine.MailBox_Team, null);
         }
 
         void MailCallBack(RedDotNode node)
@@ -61,23 +65,23 @@ namespace RedDotTutorial_1
 
         public void OnAddRdSystemBtnClick()
         {
-            int count = ManagerComponent.RedDotManager.GetRedDotCount(RedDotDefine.MailBox_System);
-            ManagerComponent.RedDotManager.Set(RedDotDefine.MailBox_System, count + 1);
+            int count = ManagerComponent.RedDotManager.GetRedDotCount(E_RedDotDefine.MailBox_System);
+            ManagerComponent.RedDotManager.Set(E_RedDotDefine.MailBox_System, count + 1);
         }
         public void OnAddRdTeamBtnClick()
         {
-            int count = ManagerComponent.RedDotManager.GetRedDotCount(RedDotDefine.MailBox_Team);
-            ManagerComponent.RedDotManager.Set(RedDotDefine.MailBox_Team, count + 1);
+            int count = ManagerComponent.RedDotManager.GetRedDotCount(E_RedDotDefine.MailBox_Team);
+            ManagerComponent.RedDotManager.Set(E_RedDotDefine.MailBox_Team, count + 1);
         }
         public void OnReduceRdSystemBtnClick()
         {
-            int count = ManagerComponent.RedDotManager.GetRedDotCount(RedDotDefine.MailBox_System);
-            ManagerComponent.RedDotManager.Set(RedDotDefine.MailBox_System, count - 1);
+            int count = ManagerComponent.RedDotManager.GetRedDotCount(E_RedDotDefine.MailBox_System);
+            ManagerComponent.RedDotManager.Set(E_RedDotDefine.MailBox_System, count - 1);
         }
         public void OnReduceRdTeamBtnClick()
         {
-            int count = ManagerComponent.RedDotManager.GetRedDotCount(RedDotDefine.MailBox_Team);
-            ManagerComponent.RedDotManager.Set(RedDotDefine.MailBox_Team, count - 1);
+            int count = ManagerComponent.RedDotManager.GetRedDotCount(E_RedDotDefine.MailBox_Team);
+            ManagerComponent.RedDotManager.Set(E_RedDotDefine.MailBox_Team, count - 1);
         }
 
         #endregion

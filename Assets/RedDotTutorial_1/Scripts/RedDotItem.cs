@@ -3,18 +3,18 @@ using UnityEngine.UI;
 
 namespace RedDotTutorial_1
 {
+    /*
+     * 表现层：根据红点是否显示或显示数，自定义红点的表现方式
+     */
+
     /// <summary>
     /// UGUI红点物体脚本
     /// </summary>
     public class RedDotItem : MonoBehaviour
     {
-        [Header("红点父节点")]
-        [SerializeField]
-        public GameObject m_DotObj;
+        [Header("红点父节点")] [SerializeField] public GameObject m_DotObj;
 
-        [Header("红点数文本")]
-        [SerializeField]
-        private Text m_DotCountText;
+        [Header("红点数文本")] [SerializeField] private Text m_DotCountText;
 
         /// <summary>
         /// 设定红点状态
