@@ -82,7 +82,7 @@ namespace RedDotTutorial_1
             }
 
             //设定该红点的计数
-            rdCount = rdCount;
+            this.rdCount = rdCount;
 
             NotifyRedDotCountChange();
 
